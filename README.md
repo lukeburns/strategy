@@ -1,1 +1,1 @@
-# A brilliant strategy
+# A strategy
