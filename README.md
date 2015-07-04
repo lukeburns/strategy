@@ -1,1 +1,1 @@
-# A fresh strategy
+# A strategy
