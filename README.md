@@ -1,1 +1,1 @@
-# A winning strategy
+# A strategy
