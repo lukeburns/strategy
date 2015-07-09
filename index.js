@@ -1,2 +1,2 @@
-var strategy = JSON.parse(process.env.strategy);
-console.log(strategy);
+var game = JSON.parse(process.env.game);
+console.log(game);
