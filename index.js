@@ -3,7 +3,7 @@ var thresholdWallet = require('ripple-wallet-threshold');
 var Remote = ripple.Remote;
 var Transaction = ripple.Transaction;
 
-var game = JSON.parse(process.env.game)
+var game = JSON.parse(process.env.game);
 var players = Object.keys(game.players);
 var wallets = players.map(function (player) {
   return game.players[player].wallet;
@@ -24,6 +24,8 @@ remote.setSecret(sharedWallet.address, sharedWallet.secret);
 
 remote.connect(function() {
 
+  var completedTransfers = 0;
+
   for (var i = 0; i < players.length; i++) {
     var login = players[i];
     var player = game.players[login];
@@ -37,6 +39,10 @@ remote.connect(function() {
       console.log('GRANT TRUST from', wallet.address, 'to', sharedWallet.address, err, res)
       transfer('100/NEW/'+sharedWallet.address, sharedWallet, wallet, function (err, res) {
         console.log('TRANSFER from', sharedWallet.address, 'to', wallet.address, err, res)
+        completedTransfers += 1;
+        if (completedTransfers === players.length) {
+          remote.disconnect();
+        }
       })
     });
   }
