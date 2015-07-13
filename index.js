@@ -3,12 +3,14 @@ var thresholdWallet = require('ripple-wallet-threshold');
 var Remote = ripple.Remote;
 var Transaction = ripple.Transaction;
 
+// import game / player information from server
 var game = JSON.parse(process.env.game);
 var players = Object.keys(game.players);
 var wallets = players.map(function (player) {
   return game.players[player].wallet;
 });
 
+// create shared wallet from player wallets
 var sharedWallet = thresholdWallet.apply(null, wallets);
 
 var remote = new Remote({
@@ -26,6 +28,7 @@ remote.connect(function() {
 
   var completedTransfers = 0;
 
+  // issue 100 NEWs (some made up currency) to each wallet from the new shared wallet
   for (var i = 0; i < players.length; i++) {
     var login = players[i];
     var player = game.players[login];
